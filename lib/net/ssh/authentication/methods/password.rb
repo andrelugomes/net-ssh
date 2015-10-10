@@ -28,9 +28,7 @@ module Net
               if message.type == USERAUTH_FAILURE
                 debug { "password failed" }
 
-                raise Net::SSH::Authentication::DisallowedMethod unless
-                  message[:authentications].split(/,/).include? 'password'
-                password = nil
+                raise Net::SSH::Authentication::DisallowedMethod 
               end
             end until (message.type != USERAUTH_FAILURE || retries >= max_retries)
 
@@ -50,7 +48,7 @@ module Net
 
           private
 
-          NUMBER_OF_PASSWORD_PROMPTS = 3
+          NUMBER_OF_PASSWORD_PROMPTS = 1
 
           def ask_password(username)
             echo = false
